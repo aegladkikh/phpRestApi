@@ -3,9 +3,9 @@ doctrine:
         default_connection: default
         connections:
             default:
-                url: '%env(DATABASE_URL_PGSQL)%'
+                url: '%env(DATABASE_URL)%'
                 driver: 'pdo_pgsql'
-                server_version: '11.4'
+                server_version: '11.2'
                 charset: utf8
 
     orm:

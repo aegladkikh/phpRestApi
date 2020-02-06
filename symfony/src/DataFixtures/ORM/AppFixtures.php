@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures;
+namespace App\DataFixtures\ORM;
 
 use App\Entity\ApiToken;
 use App\Entity\User;
@@ -22,16 +22,17 @@ class AppFixtures extends Fixture
         $user = new User();
         $user->setEmail('test@example.com');
         $user->setFirstName('test');
+        $user->setRoles(['ROLE_USER_API']);
 
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
             'test'
         ));
 
+        $manager->persist($user);
+
         $token = new ApiToken($user);
         $manager->persist($token);
-
-        $manager->persist($user);
 
         $manager->flush();
     }

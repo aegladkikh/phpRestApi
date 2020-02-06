@@ -15,6 +15,6 @@ class IndexController extends AbstractController
      */
     public function index()
     {
-        return new Response('index');
+        return new Response('hello');
     }
 }

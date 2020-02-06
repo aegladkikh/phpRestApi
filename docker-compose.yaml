@@ -1,7 +1,7 @@
 version: '3'
 services:
   php:
-    image: php:7.4-fpm-alpine
+    build: ./docker
     volumes:
       - ./symfony/:/app
     working_dir: /app
@@ -17,11 +17,11 @@ services:
     networks:
       - main
   postgres:
-    image: postgres
+    image: postgres:11.2
     restart: always
     environment:
       POSTGRES_PASSWORD: test1
-      POSTGRES_DB: currency
+      #POSTGRES_DB: currency
     ports:
       - 5432:5432
     networks:

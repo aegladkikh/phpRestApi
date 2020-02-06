@@ -34,7 +34,7 @@ class ApiToken
 
     public function __construct(User $user)
     {
-        $this->token = bin2hex(random_bytes(60));
+        $this->token = 'test';
         $this->user = $user;
         $this->expiresAt = new \DateTime('+1 hour');
     }

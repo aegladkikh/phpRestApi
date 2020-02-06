@@ -81,7 +81,11 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 
     public function start(Request $request, AuthenticationException $authException = null)
     {
-        throw new \Exception('authentication');
+        return new JsonResponse(
+            [
+                'message' => $authException->getMessageKey(),
+            ], 401
+        );
     }
 
     public function supportsRememberMe()

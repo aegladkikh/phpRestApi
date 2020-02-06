@@ -47,15 +47,9 @@ class User implements UserInterface
      */
     private $apiTokens;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="author")
-     */
-    private $articles;
-
     public function __construct()
     {
         $this->apiTokens = new ArrayCollection();
-        $this->articles = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -154,16 +148,6 @@ class User implements UserInterface
     public function getApiTokens(): Collection
     {
         return $this->apiTokens;
-    }
-
-    public function addApiToken(ApiToken $apiToken): self
-    {
-        if (!$this->apiTokens->contains($apiToken)) {
-            $this->apiTokens[] = $apiToken;
-            $apiToken->setUser($this);
-        }
-
-        return $this;
     }
 
     public function __toString()

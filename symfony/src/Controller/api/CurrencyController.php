@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("ROLE_USER")
+ * @IsGranted("ROLE_USER_API")
  */
 class CurrencyController extends AbstractController
 {
