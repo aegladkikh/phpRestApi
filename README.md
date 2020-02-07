@@ -1,5 +1,9 @@
 # Тестовая REST API для получения курс валют
+=================================
+
 # symfony / pgsql / nginx + php-fpm:7.4
+
+## Setup
 
 - docker-compose -f docker-compose.yaml up -d
 - docker-compose -f docker-compose.yaml run --rm php composer install
