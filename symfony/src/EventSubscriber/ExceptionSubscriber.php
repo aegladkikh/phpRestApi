@@ -29,10 +29,9 @@ class ExceptionSubscriber implements EventSubscriberInterface
             ->setStatusCode(500)
             ->setData(
                 [
-                    "error" => [
+                    "message" => [
                         "error_code"   => $exception->getCode(),
                         "error_string" => $exception->getMessage(),
-                        "error_detail" => '',
                     ]
                 ]
             );

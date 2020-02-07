@@ -20,20 +20,18 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setEmail('test@example.com');
         $user->setFirstName('test');
         $user->setRoles(['ROLE_USER_API']);
-
+        $user->setEmail('test@test.su');
         $user->setPassword($this->passwordEncoder->encodePassword(
             $user,
-            'test'
+            'test1'
         ));
 
-        $manager->persist($user);
-
         $token = new ApiToken($user);
-        $manager->persist($token);
 
+        $manager->persist($token);
+        $manager->persist($user);
         $manager->flush();
     }
 }

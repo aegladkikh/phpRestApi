@@ -4,7 +4,9 @@
 namespace App\Controller\api;
 
 
+use App\Repository\CurrencyRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
@@ -14,26 +16,37 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class CurrencyController extends AbstractController
 {
     /**
-     * @Route("/currencies", name="api.currencies", methods={"GET"})
+     * @var CurrencyRepository
      */
-    public function getCurrencies()
-    {
-        $user = $this->getUser();
+    private CurrencyRepository $currency_repository;
 
-        return $this->json($user, 200, [], [
-            'groups' => ['main'],
-        ]);
+    public function __construct(CurrencyRepository $currency_repository)
+    {
+        $this->currency_repository = $currency_repository;
     }
 
     /**
-     * @Route("/currency", name="api.currency", methods={"GET"})
+     * @Route("/currencies", name="api.currencies", methods={"GET"})
+     *
+     * @return JsonResponse
      */
-    public function getCurrency()
+    public function getCurrencies()
     {
-        $user = $this->getUser();
+        $data = $this->currency_repository->findAll();
 
-        return $this->json($user, 200, [], [
-            'groups' => ['main'],
-        ]);
+        return $this->json(["result" => $data], 200);
+    }
+
+    /**
+     * @Route("/currency/{id}", name="api.currency", methods={"GET"})
+     * @param int $id
+     *
+     * @return JsonResponse
+     */
+    public function getCurrency(int $id)
+    {
+        $data = $this->currency_repository->findBy(['id' => $id]);
+
+        return $this->json(["result" => $data], 200);
     }
 }
