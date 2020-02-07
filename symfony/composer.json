@@ -1,6 +1,7 @@
 {
     "name": "aegladkikh/currency-api",
     "type": "project",
+    "description": "REST API",
     "license": "proprietary",
     "require": {
         "php": "^7.4",
