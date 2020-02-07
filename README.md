@@ -1,4 +1,4 @@
-#Тестовая REST API для получения курс валют
+# Тестовая REST API для получения курс валют
 
 # symfony / pgsql / nginx + php-fpm:7.4
 
