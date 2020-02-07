@@ -12,6 +12,10 @@
 
 GET http://localhost/currencies
 
+Authorization: Bearer test
+
+{"page":1}
+
 или
 
 GET http://localhost/currency/1
