@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@master
 
     - name: Validate composer.json and composer.lock
-      run: composer validate
+      run: composer validate symfony/composer.json
 
     - name: Install dependencies
       run: composer install --prefer-dist --no-progress --no-suggest
