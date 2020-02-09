@@ -6,11 +6,11 @@
 
 - docker-compose -f docker-compose.yaml up -d
 - docker-compose -f docker-compose.yaml run --rm php composer install
-- docker-compose -f docker-compose.yaml run --rm php bin/console doctrine:database:create
-- docker-compose -f docker-compose.yaml run --rm php bin/console make:migration
-- docker-compose -f docker-compose.yaml run --rm php bin/console doctrine:migrations:migrate
-- docker-compose -f docker-compose.yaml run --rm php bin/console doctrine:fixtures:load
-- docker-compose -f docker-compose.yaml run --rm php bin/console currency:update
+- docker-compose -f docker-compose.yaml run --rm php php bin/console doctrine:database:create
+- docker-compose -f docker-compose.yaml run --rm php php bin/console make:migration
+- docker-compose -f docker-compose.yaml run --rm php php bin/console doctrine:migrations:migrate
+- docker-compose -f docker-compose.yaml run --rm php php bin/console doctrine:fixtures:load
+- docker-compose -f docker-compose.yaml run --rm php php bin/console currency:update
 
 И далее уже запрос 
 
