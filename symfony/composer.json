@@ -8,7 +8,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "ext-json": "*",
-        "ext-simplexml": "*"
+        "ext-simplexml": "*",
         "doctrine/annotations": "^1.7",
         "sensio/framework-extra-bundle": "^5.1",
         "symfony/console": "5.0.*",
