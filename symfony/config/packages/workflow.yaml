@@ -4,24 +4,24 @@ framework:
             type: 'workflow'
             audit_trail:
                 enabled: true
-                marking_store:
-                    type: 'method'
-                    property: 'currentPlace'
-                supports:
-                    - App\Entity\BlogPost
-                initial_marking: draft
-                places:
-                    - draft
-                    - reviewed
-                    - rejected
-                    - published
-                transitions:
-                    to_review:
-                        from: draft
-                        to:   reviewed
-                    publish:
-                        from: reviewed
-                        to:   published
-                    reject:
-                        from: reviewed
-                        to:   rejected
+            marking_store:
+                type: 'method'
+                property: 'currentPlace'
+            supports:
+                - App\Entity\Currency
+            initial_marking: started
+            places:
+                - started
+                - rewiew
+                - writed
+                - updated
+            transitions:
+                start:
+                    from: started
+                    to:   rewiew
+                write:
+                    from: rewiew
+                    to:   writed
+                update:
+                    from: rewiew
+                    to:   updated

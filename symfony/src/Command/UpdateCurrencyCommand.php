@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Command;
-
 
 use App\Entity\Currency;
 use Doctrine\Persistence\ManagerRegistry;
@@ -12,15 +10,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateCurrencyCommand extends Command
 {
-    protected static        $defaultName = 'currency:update';
-    protected               $url         = 'http://cbr.ru/scripts/XML_daily.asp';
+    protected static $defaultName = 'currency:update';
+    protected string $url = 'http://cbr.ru/scripts/XML_daily.asp';
     private ManagerRegistry $manager;
 
     public function __construct(ManagerRegistry $manager)
     {
-        $this->manager = $manager;
-
         parent::__construct();
+        $this->manager = $manager;
     }
 
     protected function configure()
@@ -42,8 +39,14 @@ class UpdateCurrencyCommand extends Command
 
         $data = simplexml_load_file($this->url);
 
+        if (!$data) {
+            $output->write('Ошибка при обновление цен.');
+
+            return 0;
+        }
+
         foreach ($data->children() as $row) {
-            $name  = (string)$row->Name->__toString();
+            $name = (string)$row->Name->__toString();
             $value = (string)$row->Value->__toString();
 
             $findByName = $this->manager
