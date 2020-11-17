@@ -47,7 +47,6 @@ class UpdateCurrencyCommand extends Command
         foreach ($data->children() as $row) {
             $name = (string)$row->Name->__toString();
             $value = (string)$row->Value->__toString();
-            $charCode = (string)$row->CharCode->__toString();
 
             $findByName = $this->manager
                 ->getManager()
@@ -60,7 +59,6 @@ class UpdateCurrencyCommand extends Command
                 $Currency = new Currency();
                 $Currency->setName($name);
                 $Currency->setRate($value);
-                $Currency->setCurrentPlace($charCode);
 
                 $this->manager->getManager()->persist($Currency);
             }
