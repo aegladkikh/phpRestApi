@@ -46,7 +46,7 @@ class User implements UserInterface
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ApiToken", mappedBy="user", orphanRemoval=true)
      */
-    private ArrayCollection $apiTokens;
+    private $apiTokens;
 
     public function __construct()
     {
