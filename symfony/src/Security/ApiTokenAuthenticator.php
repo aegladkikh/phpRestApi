@@ -16,22 +16,23 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 {
     private ApiTokenRepository $apiTokenRepo;
-    /**
-     * @var UserPasswordEncoderInterface
-     */
     private UserPasswordEncoderInterface $passwordEncoder;
 
-
+    /**
+     * ApiTokenAuthenticator constructor.
+     * @param ApiTokenRepository $apiTokenRepo
+     * @param UserPasswordEncoderInterface $passwordEncoder
+     */
     public function __construct(ApiTokenRepository $apiTokenRepo, UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->apiTokenRepo = $apiTokenRepo;
         $this->passwordEncoder = $passwordEncoder;
     }
 
-    public function supports(Request $request)
+    public function supports(Request $request): bool
     {
         return $request->headers->has('Authorization')
-               && 0 === strpos(
+            && 0 === strpos(
                 $request->headers->get('Authorization'),
                 'Bearer '
             );
@@ -68,7 +69,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
         return $token->getUser();
     }
 
-    public function checkCredentials($credentials, UserInterface $user)
+    public function checkCredentials($credentials, UserInterface $user): bool
     {
         return true;
     }
@@ -86,7 +87,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
     {
     }
 
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): JsonResponse
     {
         return new JsonResponse(
             [
@@ -95,7 +96,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
         );
     }
 
-    public function supportsRememberMe()
+    public function supportsRememberMe(): bool
     {
         return false;
     }

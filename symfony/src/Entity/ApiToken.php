@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -14,29 +16,29 @@ class ApiToken
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $token;
+    private string $token;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $expiresAt;
+    private DateTime $expiresAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="apiTokens")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private User $user;
 
     public function __construct(User $user)
     {
         $this->token = 'test';
         $this->user = $user;
-        $this->expiresAt = new \DateTime('+1 hour');
+        $this->expiresAt = new DateTime('+1 hour');
     }
 
     public function getId(): ?int
@@ -49,7 +51,7 @@ class ApiToken
         return $this->token;
     }
 
-    public function getExpiresAt(): ?\DateTimeInterface
+    public function getExpiresAt(): ?DateTimeInterface
     {
         return $this->expiresAt;
     }
@@ -61,6 +63,6 @@ class ApiToken
 
     public function isExpired(): bool
     {
-        return $this->getExpiresAt() <= new \DateTime();
+        return $this->getExpiresAt() <= new DateTime();
     }
 }

@@ -35,7 +35,7 @@ class CurrencyController extends AbstractController
      */
     public function getCurrencies(): JsonResponse
     {
-//        $this->denyAccessUnlessGranted('ROLE_USER_API');
+        $this->denyAccessUnlessGranted('ROLE_USER_API');
 
         $data = $this->currencyService->getAll();
 
@@ -50,7 +50,7 @@ class CurrencyController extends AbstractController
      */
     public function getCurrency(int $id): JsonResponse
     {
-//        $this->denyAccessUnlessGranted('ROLE_USER_API');
+        $this->denyAccessUnlessGranted('ROLE_USER_API');
 
         $data = $this->currencyService->getCurrency($id);
 

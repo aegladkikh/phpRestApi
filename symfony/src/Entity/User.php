@@ -19,34 +19,34 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Groups("main")
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private array $roles = [];
 
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups("main")
      */
-    private $firstName;
+    private ?string $firstName;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $password;
+    private ?string $password;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\ApiToken", mappedBy="user", orphanRemoval=true)
      */
-    private $apiTokens;
+    private ArrayCollection $apiTokens;
 
     public function __construct()
     {
