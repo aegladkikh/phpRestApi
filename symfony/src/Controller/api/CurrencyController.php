@@ -1,70 +1,62 @@
 <?php
 
-
 namespace App\Controller\api;
 
-
-use App\Repository\CurrencyRepository;
+use App\Service\CurrencyService;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
- * @IsGranted("ROLE_USER_API")
+ * @Route("/api", name="api.")
  */
 class CurrencyController extends AbstractController
 {
     /**
-     * @var CurrencyRepository
+     * @var CurrencyService
      */
-    private CurrencyRepository $currency_repository;
+    private CurrencyService $currencyService;
 
-    public function __construct(CurrencyRepository $currency_repository)
+    /**
+     * CurrencyController constructor.
+     * @param CurrencyService $currencyService
+     */
+    public function __construct(CurrencyService $currencyService)
     {
-        $this->currency_repository = $currency_repository;
+        $this->currencyService = $currencyService;
     }
 
     /**
-     * @Route("/currencies", name="api.currencies", methods={"GET"})
-     * @param Request $request
+     * @Route("/currencies", name="currencies", methods={"GET"})
      *
      * @return JsonResponse
      * @throws Exception
      */
-    public function getCurrencies(Request $request)
+    public function getCurrencies(): JsonResponse
     {
-        $json = $request->getContent();
+//        $this->denyAccessUnlessGranted('ROLE_USER_API');
 
-        $page = 1; 
-
-        if (!empty($json)) {
-            $json = json_decode($json, true);
-
-            if (JSON_ERROR_NONE !== json_last_error()) {
-                throw new Exception('invalid json', 500);
-            }
-
-            // TODO можно конечно валидатор прикрутить, но думаю тут и так все понятно
-            $page = is_numeric($json['page']) ? (int)$json['page'] : 1;
-        }
-
-        $data = $this->currency_repository->findBy([], null, 5, 5 * ($page - 1));
+        $data = $this->currencyService->getAll();
 
         return $this->json(["result" => $data], 200);
     }
 
     /**
-     * @Route("/currency/{id}", name="api.currency", methods={"GET"})
+     * @Route("/currency/{id}", name="currency", methods={"GET"})
      * @param int $id
      *
      * @return JsonResponse
      */
-    public function getCurrency(int $id)
+    public function getCurrency(int $id): JsonResponse
     {
-        $data = $this->currency_repository->findBy(['id' => $id]);
+//        $this->denyAccessUnlessGranted('ROLE_USER_API');
+
+        $data = $this->currencyService->getCurrency($id);
+
+        if (!$data) {
+            throw $this->createNotFoundException('Информация не найдена.');
+        }
 
         return $this->json(["result" => $data], 200);
     }

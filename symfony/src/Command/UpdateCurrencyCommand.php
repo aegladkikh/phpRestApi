@@ -10,7 +10,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class UpdateCurrencyCommand extends Command
 {
-    protected static $defaultName = 'currency:update';
     protected string $url = 'http://cbr.ru/scripts/XML_daily.asp';
     private ManagerRegistry $manager;
 
@@ -20,14 +19,14 @@ class UpdateCurrencyCommand extends Command
         $this->manager = $manager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('currency:update')
             ->setDescription('Обновление курса валют.');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         // outputs multiple lines to the console (adding "\n" at the end of each line)
         $output->writeln(
@@ -37,7 +36,7 @@ class UpdateCurrencyCommand extends Command
             ]
         );
 
-        $data = simplexml_load_file($this->url);
+        $data = simplexml_load_string(file_get_contents($this->url));
 
         if (!$data) {
             $output->write('Ошибка при обновление цен.');
@@ -48,6 +47,7 @@ class UpdateCurrencyCommand extends Command
         foreach ($data->children() as $row) {
             $name = (string)$row->Name->__toString();
             $value = (string)$row->Value->__toString();
+            $charCode = (string)$row->CharCode->__toString();
 
             $findByName = $this->manager
                 ->getManager()
@@ -60,6 +60,7 @@ class UpdateCurrencyCommand extends Command
                 $Currency = new Currency();
                 $Currency->setName($name);
                 $Currency->setRate($value);
+                $Currency->setCurrentPlace($charCode);
 
                 $this->manager->getManager()->persist($Currency);
             }
