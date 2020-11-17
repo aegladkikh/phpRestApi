@@ -14,7 +14,7 @@
 
 И далее уже запрос 
 
-GET http://localhost/currencies
+GET http://localhost/api/currencies
 
 Authorization: Bearer test
 
@@ -22,6 +22,6 @@ Authorization: Bearer test
 
 или
 
-GET http://localhost/currency/1
+GET http://localhost/api/currency/1
 
 Authorization: Bearer test
