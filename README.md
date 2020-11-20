@@ -16,10 +16,6 @@
 
 GET http://localhost/api/currencies
 
-Authorization: Bearer test
-
-{"page":1}
-
 или
 
 GET http://localhost/api/currency/1
