@@ -13,15 +13,15 @@ class CurrencyService
     /**
      * @var CurrencyRepository
      */
-    private CurrencyRepository $currency_repository;
+    private CurrencyRepository $currencyRepository;
 
     /**
      * CurrencyService constructor.
-     * @param CurrencyRepository $currency_repository
+     * @param CurrencyRepository $currencyRepository
      */
-    public function __construct(CurrencyRepository $currency_repository)
+    public function __construct(CurrencyRepository $currencyRepository)
     {
-        $this->currency_repository = $currency_repository;
+        $this->currencyRepository = $currencyRepository;
     }
 
     /**
@@ -29,7 +29,7 @@ class CurrencyService
      */
     public function getAll(): array
     {
-        return $this->currency_repository->findAll();
+        return $this->currencyRepository->findAll();
     }
 
     /**
@@ -38,6 +38,6 @@ class CurrencyService
      */
     public function getCurrency(int $id): array
     {
-        return $this->currency_repository->findBy(['id' => $id]);
+        return $this->currencyRepository->findBy(['id' => $id]);
     }
 }
