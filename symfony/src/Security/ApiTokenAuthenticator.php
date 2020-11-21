@@ -6,7 +6,6 @@ use App\Repository\ApiTokenRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,17 +15,14 @@ use Symfony\Component\Security\Guard\AbstractGuardAuthenticator;
 class ApiTokenAuthenticator extends AbstractGuardAuthenticator
 {
     private ApiTokenRepository $apiTokenRepo;
-    private UserPasswordEncoderInterface $passwordEncoder;
 
     /**
      * ApiTokenAuthenticator constructor.
      * @param ApiTokenRepository $apiTokenRepo
-     * @param UserPasswordEncoderInterface $passwordEncoder
      */
-    public function __construct(ApiTokenRepository $apiTokenRepo, UserPasswordEncoderInterface $passwordEncoder)
+    public function __construct(ApiTokenRepository $apiTokenRepo)
     {
         $this->apiTokenRepo = $apiTokenRepo;
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function supports(Request $request): bool
@@ -91,7 +87,7 @@ class ApiTokenAuthenticator extends AbstractGuardAuthenticator
     {
         return new JsonResponse(
             [
-                'message' => $authException->getMessageKey(),
+                'message' => null !== $authException ? $authException->getMessageKey() : 'Access denied.',
             ], 401
         );
     }
